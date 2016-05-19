@@ -102,7 +102,7 @@ class AVLTreeTests: XCTestCase {
     let min = treeNode.minimum()
     
     XCTAssertNotNil(min, "Minimum on single node should be returned")
-    XCTAssertEqual(min?.payload,treeNode.payload)
+    XCTAssertEqual(min.payload,treeNode.payload)
   }
   
   func testDeleteExistentKey() {
@@ -144,7 +144,7 @@ class AVLTreeTests: XCTestCase {
       for i in p {
         tree.delete(i)
         count -= 1
-        XCTAssertEqual(tree.size, count, "Delete didn't update size correctly!")
+        XCTAssertEqual(tree.count, count, "Delete didn't update size correctly!")
       }
     }
   }
@@ -167,8 +167,8 @@ enum AVLTreeError: ErrorType {
 extension AVLTree where Key : SignedIntegerType {
   func height(node: Node?) -> Int {
     if let node = node {
-      let lHeight = height(node.leftChild)
-      let rHeight = height(node.rightChild)
+      let lHeight = height(node.left)
+      let rHeight = height(node.right)
 
       return max(lHeight, rHeight) + 1
     }
@@ -177,11 +177,11 @@ extension AVLTree where Key : SignedIntegerType {
 
   func inOrderCheckBalanced(node: Node?) throws {
     if let node = node {
-      guard abs(height(node.leftChild) - height(node.rightChild)) <= 1 else {
+      guard abs(height(node.left) - height(node.right)) <= 1 else {
         throw AVLTreeError.NotBalanced
       }
-      try inOrderCheckBalanced(node.leftChild)
-      try inOrderCheckBalanced(node.rightChild)
+      try inOrderCheckBalanced(node.left)
+      try inOrderCheckBalanced(node.right)
     }
   }
 }

@@ -31,7 +31,7 @@ public class AVLTree<Key: Comparable, Payload> {
 	public typealias Node = TreeNode<Key, Payload>
 	
 	private(set) public var root: Node?
-	private	var count: Int { return root != nil ? root!.count : 0 }
+	public var count: Int { return root != nil ? root!.count : 0 }
 	private(set) public var size = 0 {
 		didSet {
 			guard !isBalanced else { display(); return }
@@ -262,21 +262,6 @@ private extension TreeNode {
 		return parent != nil ? parent!.depth + 1 : 0
 	}
 	
-	private var isRoot: Bool {
-		return parent == nil
-	}
-	
-	private var isLeaf: Bool {
-		return right == nil && left == nil
-	}
-	
-	private var isLeftChild: Bool {
-		return parent?.left === self
-	}
-	
-	private var isRightChild: Bool {
-		return parent?.right === self
-	}
 	
 	private var hasLeftChild: Bool {
 		return left != nil
@@ -284,14 +269,6 @@ private extension TreeNode {
 	
 	private var hasRightChild: Bool {
 		return right != nil
-	}
-	
-	private var hasAnyChild: Bool {
-		return hasLeftChild || hasRightChild
-	}
-	
-	private var hasBothChildren: Bool {
-		return hasLeftChild && hasRightChild
 	}
 	
 	private var root: Node {
@@ -375,6 +352,30 @@ extension TreeNode {
 		return nodeTrasform{ $0.payload }
 	}
 	
+	public var isRoot: Bool {
+		return parent == nil
+	}
+	
+	public var isLeaf: Bool {
+		return right == nil && left == nil
+	}
+	
+	public var isLeftChild: Bool {
+		return parent?.left === self
+	}
+	
+	public var isRightChild: Bool {
+		return parent?.right === self
+	}
+	
+	public var hasAnyChild: Bool {
+		return hasLeftChild || hasRightChild
+	}
+	
+	public var hasBothChildren: Bool {
+		return hasLeftChild && hasRightChild
+	}
+
 	public var isBalanced: Bool {
 		return abs(balanceFactor) < 2
 	}
